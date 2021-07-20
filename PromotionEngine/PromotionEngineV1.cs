@@ -4,7 +4,7 @@ namespace PromotionEngine
 {
     public class PromotionEngineV1
     {
-        public void Add(char v1, int v2)
+        public void Add(string itemSku, int quantity)
         {
             throw new NotImplementedException();
         }
