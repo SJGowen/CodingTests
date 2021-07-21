@@ -23,7 +23,7 @@ namespace PromotionEngine
             foreach (var orderLine in orderLines)
             {
                 totalBill += stockItems.FirstOrDefault(s => s.Sku == orderLine.ItemSku).UnitPrice * orderLine.Quantity;
-                var quantityDiscounts = this.quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku);
+                var quantityDiscounts = this.quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku && d.Quantity <= orderLine.Quantity);
                 if (quantityDiscounts.Any())
                 {
                     totalDiscount += quantityDiscounts.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscounts.FirstOrDefault().Quantity);
