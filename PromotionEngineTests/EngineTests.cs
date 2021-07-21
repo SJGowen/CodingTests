@@ -44,6 +44,19 @@ namespace PromotionEngineTests
         }
 
         [Fact]
+        public void MultipleCombiDiscountCanApply()
+        {
+            var engine = new PromotionEngineV1();
+            StockWithTestData(engine);
+            engine.Order("A", 3);
+            engine.Order("B", 5);
+            engine.Order("C", 2);
+            engine.Order("D", 3);
+            var total = engine.CalculateTotal();
+            Assert.Equal(325, total);
+        }
+
+        [Fact]
         public void CannotOrderUnstockedItem()
         {
             var engine = new PromotionEngineV1();
