@@ -55,11 +55,11 @@ namespace PromotionEngine
         {
             foreach (var combiDiscount in combiDiscounts)
             {
-                var combiDiscs = orderLines.Where(l => l.ItemSku == combiDiscount.Sku1 && l.Quantity >= combiDiscount.Quantity1);
-                if (combiDiscs.Any())
+                var discOrderLines = orderLines.Where(l => l.ItemSku == combiDiscount.Sku1 && l.Quantity >= combiDiscount.Quantity1);
+                if (discOrderLines.Any())
                 {
-                    combiDiscs = orderLines.Where(l => l.ItemSku == combiDiscount.Sku2 && l.Quantity >= combiDiscount.Quantity2);
-                    if (combiDiscs.Any())
+                    discOrderLines = orderLines.Where(l => l.ItemSku == combiDiscount.Sku2 && l.Quantity >= combiDiscount.Quantity2);
+                    if (discOrderLines.Any())
                     {
                         totalDiscount += combiDiscount.Price;
                     }
