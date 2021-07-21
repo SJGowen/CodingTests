@@ -5,11 +5,11 @@ namespace PromotionEngine
 {
     public class PromotionEngineV1
     {
-        Queue<OrderLines> orderLines = new Queue<OrderLines>();
+        Queue<OrderLine> orderLines = new Queue<OrderLine>();
 
         public void Add(string itemSku, int quantity)
         {
-            throw new NotImplementedException();
+            orderLines.Enqueue(new OrderLine(itemSku, quantity));
         }
 
         public object CalculateTotal()
