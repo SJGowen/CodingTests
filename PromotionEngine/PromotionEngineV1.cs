@@ -32,16 +32,23 @@ namespace PromotionEngine
             {
                 totalBill += stockItems.FirstOrDefault(s => s.Sku == orderLine.ItemSku).UnitPrice * orderLine.Quantity;
 
-                var quantityDiscs = quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku && d.Quantity <= orderLine.Quantity);
-                if (quantityDiscs.Any())
-                {
-                    totalDiscount += quantityDiscs.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscs.FirstOrDefault().Quantity);
-                }
+                totalDiscount = CalculateQuantiyDiscount(totalDiscount, orderLine);
             }
 
             totalDiscount = CalculateCombiDiscount(totalDiscount);
 
             return totalBill - totalDiscount;
+        }
+
+        private decimal CalculateQuantiyDiscount(decimal totalDiscount, OrderLine orderLine)
+        {
+            var quantityDiscs = quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku && d.Quantity <= orderLine.Quantity);
+            if (quantityDiscs.Any())
+            {
+                totalDiscount += quantityDiscs.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscs.FirstOrDefault().Quantity);
+            }
+
+            return totalDiscount;
         }
 
         private decimal CalculateCombiDiscount(decimal totalDiscount)
