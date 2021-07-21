@@ -6,9 +6,9 @@ namespace PromotionEngine
 {
     public class PromotionEngineV1
     {
-        List<StockItem> stockItems = new List<StockItem>();
-        List<Discount> discounts = new List<Discount>();
-        Queue<OrderLine> orderLines = new Queue<OrderLine>();
+        readonly List<StockItem> stockItems = new();
+        readonly List<Discount> discounts = new();
+        readonly Queue<OrderLine> orderLines = new();
 
         public void Add(string itemSku, int quantity)
         {
@@ -18,12 +18,16 @@ namespace PromotionEngine
         public decimal CalculateTotal()
         {
             var totalBill = 0m;
+            var totalDiscount = 0m;
             foreach (var orderLine in orderLines)
             {
                 totalBill += stockItems.FirstOrDefault(s => s.Sku == orderLine.ItemSku).UnitPrice * orderLine.Quantity;
+                var quantityDiscounts = discounts.Where(d => d.Sku == orderLine.ItemSku);
+                if (quantityDiscounts.Any())
+                    totalDiscount += quantityDiscounts.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscounts.FirstOrDefault().Quantity);
             }
 
-            return totalBill;
+            return totalBill - totalDiscount;
         }
 
         public void AddStock(string sku, decimal unitPrice)
