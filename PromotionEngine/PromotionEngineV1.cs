@@ -58,10 +58,12 @@ namespace PromotionEngine
                 var discOrderLines = orderLines.Where(l => l.ItemSku == combiDiscount.Sku1 && l.Quantity >= combiDiscount.Quantity1);
                 if (discOrderLines.Any())
                 {
+                    var quan1 = discOrderLines.FirstOrDefault().Quantity / combiDiscount.Quantity1;
                     discOrderLines = orderLines.Where(l => l.ItemSku == combiDiscount.Sku2 && l.Quantity >= combiDiscount.Quantity2);
                     if (discOrderLines.Any())
                     {
-                        totalDiscount += combiDiscount.Price;
+                        var quan2 = discOrderLines.FirstOrDefault().Quantity / combiDiscount.Quantity2;
+                        totalDiscount += combiDiscount.Price * Math.Min(quan1, quan2);
                     }
                 }
             }
