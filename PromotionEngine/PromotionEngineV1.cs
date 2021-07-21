@@ -5,6 +5,7 @@ namespace PromotionEngine
 {
     public class PromotionEngineV1
     {
+        List<StockItems> stockItems = new List<StocskItems>();
         Queue<OrderLine> orderLines = new Queue<OrderLine>();
 
         public void Add(string itemSku, int quantity)
@@ -15,6 +16,11 @@ namespace PromotionEngine
         public object CalculateTotal()
         {
             throw new NotImplementedException();
+        }
+
+        public void AddStock(string sku, decimal unitPrice)
+        {
+            stockItems.Add(new StockItems(sku, unitPrice));
         }
     }
 }
