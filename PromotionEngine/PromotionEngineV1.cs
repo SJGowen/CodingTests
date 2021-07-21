@@ -23,11 +23,11 @@ namespace PromotionEngine
             foreach (var orderLine in orderLines)
             {
                 totalBill += stockItems.FirstOrDefault(s => s.Sku == orderLine.ItemSku).UnitPrice * orderLine.Quantity;
-                var quantityDiscounts = this.quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku && d.Quantity <= orderLine.Quantity);
-                if (quantityDiscounts.Any())
+                var quantityDiscs = quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku && d.Quantity <= orderLine.Quantity);
+                if (quantityDiscs.Any())
                 {
-                    totalDiscount += quantityDiscounts.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscounts.FirstOrDefault().Quantity);
-                }
+                    totalDiscount += quantityDiscs.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscs.FirstOrDefault().Quantity);
+                } 
             }
 
             return totalBill - totalDiscount;
