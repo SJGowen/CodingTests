@@ -11,9 +11,9 @@ namespace PromotionEngineTests
         {
             var engine = new PromotionEngineV1();
             StockWithTestData(engine);
-            engine.Add("A", 1);
-            engine.Add("B", 1);
-            engine.Add("C", 1);
+            engine.Order("A", 1);
+            engine.Order("B", 1);
+            engine.Order("C", 1);
             var total = engine.CalculateTotal();
             Assert.Equal(100, total);
         }
@@ -23,9 +23,9 @@ namespace PromotionEngineTests
         {
             var engine = new PromotionEngineV1();
             StockWithTestData(engine);
-            engine.Add("A", 5);
-            engine.Add("B", 5);
-            engine.Add("C", 1);
+            engine.Order("A", 5);
+            engine.Order("B", 5);
+            engine.Order("C", 1);
             var total = engine.CalculateTotal();
             Assert.Equal(370, total);
         }
@@ -35,10 +35,10 @@ namespace PromotionEngineTests
         {
             var engine = new PromotionEngineV1();
             StockWithTestData(engine);
-            engine.Add("A", 3);
-            engine.Add("B", 5);
-            engine.Add("C", 1);
-            engine.Add("D", 1);
+            engine.Order("A", 3);
+            engine.Order("B", 5);
+            engine.Order("C", 1);
+            engine.Order("D", 1);
             var total = engine.CalculateTotal();
             Assert.Equal(280, total);
         }
@@ -48,7 +48,7 @@ namespace PromotionEngineTests
         {
             var engine = new PromotionEngineV1();
             StockWithTestData(engine);
-            var caughtException = Assert.Throws<KeyNotFoundException>(() => engine.Add("E", 3));
+            var caughtException = Assert.Throws<KeyNotFoundException>(() => engine.Order("E", 3));
             Assert.Equal("You can only order items in the Catalogue!", caughtException.Message);
         }
 

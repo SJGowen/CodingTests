@@ -11,7 +11,7 @@ namespace PromotionEngine
         readonly List<CombiDiscount> combiDiscounts = new();
         readonly Queue<OrderLine> orderLines = new();
 
-        public void Add(string itemSku, int quantity)
+        public void Order(string itemSku, int quantity)
         {
             var stock = (stockItems.Where(s => s.Sku == itemSku));
             if (stock.Any())
