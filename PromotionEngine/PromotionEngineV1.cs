@@ -36,9 +36,16 @@ namespace PromotionEngine
                 if (quantityDiscs.Any())
                 {
                     totalDiscount += quantityDiscs.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscs.FirstOrDefault().Quantity);
-                } 
+                }
             }
 
+            totalDiscount = CalculateCombiDiscount(totalDiscount);
+
+            return totalBill - totalDiscount;
+        }
+
+        private decimal CalculateCombiDiscount(decimal totalDiscount)
+        {
             foreach (var combiDiscount in combiDiscounts)
             {
                 var combiDiscs = orderLines.Where(l => l.ItemSku == combiDiscount.Sku1 && l.Quantity >= combiDiscount.Quantity1);
@@ -52,7 +59,7 @@ namespace PromotionEngine
                 }
             }
 
-            return totalBill - totalDiscount;
+            return totalDiscount;
         }
 
         public void AddStock(string sku, decimal unitPrice)
