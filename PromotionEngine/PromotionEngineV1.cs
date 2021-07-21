@@ -7,7 +7,8 @@ namespace PromotionEngine
     public class PromotionEngineV1
     {
         readonly List<StockItem> stockItems = new();
-        readonly List<Discount> discounts = new();
+        readonly List<QuantityDiscount> quantityDiscounts = new();
+        readonly List<CombiDiscount> combiDiscounts = new();
         readonly Queue<OrderLine> orderLines = new();
 
         public void Add(string itemSku, int quantity)
@@ -22,9 +23,11 @@ namespace PromotionEngine
             foreach (var orderLine in orderLines)
             {
                 totalBill += stockItems.FirstOrDefault(s => s.Sku == orderLine.ItemSku).UnitPrice * orderLine.Quantity;
-                var quantityDiscounts = discounts.Where(d => d.Sku == orderLine.ItemSku);
+                var quantityDiscounts = this.quantityDiscounts.Where(d => d.Sku == orderLine.ItemSku);
                 if (quantityDiscounts.Any())
+                {
                     totalDiscount += quantityDiscounts.FirstOrDefault().Price * (orderLine.Quantity / quantityDiscounts.FirstOrDefault().Quantity);
+                }
             }
 
             return totalBill - totalDiscount;
@@ -35,9 +38,14 @@ namespace PromotionEngine
             stockItems.Add(new StockItem(sku, unitPrice));
         }
 
+        public void AddDiscount(string sku1, int quantity1, string sku2, int quantity2, decimal price)
+        {
+            combiDiscounts.Add(new CombiDiscount(sku1, quantity1, sku2, quantity2, price));
+        }
+
         public void AddDiscount(string sku, int quantity, decimal price)
         {
-            discounts.Add(new Discount(sku, quantity, price));
+            quantityDiscounts.Add(new QuantityDiscount(sku, quantity, price));
         }
     }
 }
