@@ -1,4 +1,5 @@
 using PromotionEngine;
+using System.Collections.Generic;
 using Xunit;
 
 namespace PromotionEngineTests
@@ -40,6 +41,15 @@ namespace PromotionEngineTests
             engine.Add("D", 1);
             var total = engine.CalculateTotal();
             Assert.Equal(280, total);
+        }
+
+        [Fact]
+        public void CannotOrderUnstockedItem()
+        {
+            var engine = new PromotionEngineV1();
+            StockWithTestData(engine);
+            var caughtException = Assert.Throws<KeyNotFoundException>(() => engine.Add("E", 3));
+            Assert.Equal("You can only order items in the Catalogue!", caughtException.Message);
         }
 
         private void StockWithTestData(PromotionEngineV1 engine)

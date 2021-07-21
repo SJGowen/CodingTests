@@ -13,7 +13,15 @@ namespace PromotionEngine
 
         public void Add(string itemSku, int quantity)
         {
-            orderLines.Enqueue(new OrderLine(itemSku, quantity));
+            var stock = (stockItems.Where(s => s.Sku == itemSku));
+            if (stock.Any())
+            {
+                orderLines.Enqueue(new OrderLine(itemSku, quantity));
+            }
+            else
+            {
+                throw new KeyNotFoundException("You can only order items in the Catalogue!");
+            }
         }
 
         public decimal CalculateTotal()
