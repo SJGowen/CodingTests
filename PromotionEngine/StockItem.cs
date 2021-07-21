@@ -2,13 +2,13 @@
 {
     internal class StockItem
     {
-        public string sku { get; set; }
-        public decimal unitPrice { get; set; }
+        public string Sku { get; set; }
+        public decimal UnitPrice { get; set; }
 
         public StockItem(string sku, decimal unitPrice)
         {
-            this.sku = sku;
-            this.unitPrice = unitPrice;
+            Sku = sku;
+            UnitPrice = unitPrice;
         }
     }
 }

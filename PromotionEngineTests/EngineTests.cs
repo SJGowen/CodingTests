@@ -35,6 +35,8 @@ namespace PromotionEngineTests
             engine.AddStock("B", 30m);
             engine.AddStock("C", 20m);
             engine.AddStock("D", 15m);
+            engine.AddDiscount("A", 3, 20m);
+            engine.AddDiscount("B", 2, 15m);
         }
     }
 }
