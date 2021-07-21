@@ -2,8 +2,8 @@
 {
     public class OrderLine
     {
-        private string itemSku;
-        private int quantity;
+        public string itemSku { get; set; }
+        public int quantity { get; set; }
 
         public OrderLine(string itemSku, int quantity)
         {
